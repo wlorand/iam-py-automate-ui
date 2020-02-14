@@ -15,13 +15,13 @@ TEST_USERPASS = 'Intuit01-'
 # ------------------------------------------------------------------------------
 
 # FIREFOX - geckodriver
-# browser = webdriver.Firefox()
+browser = webdriver.Firefox()
 
 # CHROME chromedriver (80)
-options = webdriver.ChromeOptions()
-options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
-chrome_driver_binary = "/usr/local/bin/chromedriver"
-browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
+# options = webdriver.ChromeOptions()
+# options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+# chrome_driver_binary = "/usr/local/bin/chromedriver"
+# browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
 
 # ------------------------------------------------------------------------------
 #                                SCRIPT LOGIC

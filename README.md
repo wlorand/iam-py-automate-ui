@@ -7,6 +7,6 @@ to get the scripts running locally from the command line
 
 These instructions assume you have [Homebrew](https://brew.sh/) running on a Mac. 
 
-1. Install Python3 via Homebrew (while python2 comes pre-installed on macos X, python3 rules!)
-    $ brew install python
+1. Install Python3 via Homebrew    
+    <pre><code>$ brew install python</code></pre>
     

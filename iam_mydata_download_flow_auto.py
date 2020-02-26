@@ -13,7 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # ------------------------------------------------------------------------------
 WAIT_TIMEOUT = 20 # seconds
 IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/index.html?iux_v3=true'
-TEST_USERNAME = 'iamtestpass_1582737153425' # NOTE: This needs new test user for new request
+TEST_USERNAME = 'iamtestpass_1582755058042' # NOTE: This needs new test user for new request
 TEST_USERPASS = 'Intuit01-'
 
 # ------------------------------------------------------------------------------
@@ -52,14 +52,14 @@ wait_for_elem_select('button[name="SignIn"]').click()
 # 2: Click Data & Privacy, Download 
 WebDriverWait(browser, WAIT_TIMEOUT).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-automation="downloadManager-Continue-button"]'))).click()
 
-# 3: Move thru the Download Flow Pages
+# 3: Move thru the Download Flow Pages (No Products)
 # 3.1: Primer Page
 wait_for_elem_select('button[data-automation="continue-button"]').click()
 
 # 3.2: Start Page
 wait_for_elem_select('button[data-automation="continue-button"]').click()
 
-# 3.3: Confirm Page (No Products)
+# 3.3: Download Confirm Page (No Products)
 wait_for_elem_select('input[data-automation="password-field"]').send_keys(TEST_USERPASS)
 wait_for_elem_select('button[data-automation="continue-button"]').click()
 

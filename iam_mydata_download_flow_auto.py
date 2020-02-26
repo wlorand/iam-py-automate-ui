@@ -1,4 +1,4 @@
-# FILE: iam_auth_login.py
+# FILE: iam_mydata_download_flow_auto.py
 # DESC: use Selenium with Python to automate Download work order creation on E2E
 from time import sleep
 
@@ -13,7 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # ------------------------------------------------------------------------------
 WAIT_TIMEOUT = 20 # seconds
 IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/index.html?iux_v3=true'
-TEST_USERNAME = 'iamtestpass_1582582172775' # NOTE: This needs new test user for new request
+TEST_USERNAME = 'iamtestpass_1582737153425' # NOTE: This needs new test user for new request
 TEST_USERPASS = 'Intuit01-'
 
 # ------------------------------------------------------------------------------
@@ -42,6 +42,7 @@ def wait_for_elem_select(selector):
 
 # Tests Auth Download Flow (No Products) on E2E
 browser.get(IAM_AUTH_URL_E2E)
+browser.maximize_window()
 
 # 1: Login to Auth
 wait_for_elem_select('#ius-userid').send_keys(TEST_USERNAME)

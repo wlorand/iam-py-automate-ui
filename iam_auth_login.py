@@ -1,11 +1,14 @@
 # FILE: iam_auth_login.py
 # DESC: use Selenium with Python to automate auth login on E2E
-from selenium import webdriver
 from time import sleep
+
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
 
 # ------------------------------------------------------------------------------
 #                                  CONSTANTS
 # ------------------------------------------------------------------------------
+WAIT_TIMEOUT = 20 # seconds
 IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/index.html?iux_v3=true'
 TEST_USERNAME = 'iamtestpass_1581549935015'
 TEST_USERPASS = 'Intuit01-'
@@ -24,28 +27,27 @@ chrome_driver_binary = "/usr/local/bin/chromedriver"
 browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
 
 # ------------------------------------------------------------------------------
+#                                UTILITY METHODS
+# ------------------------------------------------------------------------------
+
+def wait_for_elem_select(selector):
+    return WebDriverWait(browser, WAIT_TIMEOUT).until(lambda browser: browser.find_element_by_css_selector(selector))
+
+# ------------------------------------------------------------------------------
 #                                SCRIPT LOGIC
 # ------------------------------------------------------------------------------
 
 # Tests Auth Login on E2E
-#
-# 1. Start Flow with a GET for the URL
 browser.get(IAM_AUTH_URL_E2E)
 
-# Wait 10-20 Seconds for the Page to Load and DOM to be ready
-# TODO: Replace this with WebDriver Wait utility method
-sleep(10)
+# 1.1: Enter User/Pass
+wait_for_elem_select('#ius-userid').send_keys(TEST_USERNAME)
+wait_for_elem_select('#ius-password').send_keys(TEST_USERPASS)
 
-# Find User/Pass Elements and Enter Text
-user_id_field = browser.find_element_by_id('ius-userid')
-user_id_field.send_keys(TEST_USERNAME)
-user_pass_field = browser.find_element_by_id('ius-password')
-user_pass_field.send_keys(TEST_USERPASS)
+# 1.2: Click Sign-In Button
+wait_for_elem_select('button[name="SignIn"]').click()
 
-# Click Sign-In Button
-sign_in_button = browser.find_element_by_name('SignIn')
-sign_in_button.click()
-
-# Cleanup and Close Browser
-# print("All is Good, About to close the browser")
-# browser.close()
+# Cleanup 
+print("All is Good, About to close the browser")
+sleep(5)
+browser.close()

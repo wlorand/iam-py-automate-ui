@@ -39,6 +39,7 @@ def wait_for_elem_select(selector):
 
 # Tests Auth Login on E2E
 browser.get(IAM_AUTH_URL_E2E)
+browser.maximize_window()
 
 # 1.1: Enter User/Pass
 wait_for_elem_select('#ius-userid').send_keys(TEST_USERNAME)

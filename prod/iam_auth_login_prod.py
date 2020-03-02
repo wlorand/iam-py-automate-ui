@@ -1,4 +1,4 @@
-# FILE: iam_auth_login.py
+# FILE: iam_auth_login_e2e.py
 # DESC: use Selenium with Python to automate auth login on E2E
 from time import sleep
 
@@ -51,4 +51,4 @@ wait_for_elem_select('button[name="SignIn"]').click()
 # Cleanup 
 print("All is Good, About to close the browser")
 sleep(5)
-browser.close()
+# browser.close()

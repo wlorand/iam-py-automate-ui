@@ -1,4 +1,4 @@
-# FILE: iam_mydata_delete_flow_auto.py
+# FILE: iam_mydata_delete_flow_auto_e2e.py
 # DESC: use Selenium with Python to automate Delete work order creation on E2E
 from time import sleep
 
@@ -13,7 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # ------------------------------------------------------------------------------
 WAIT_TIMEOUT = 20 # seconds
 IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/index.html?iux_v3=true'
-TEST_USERNAME = 'iamtestpass_1582755058042' # NOTE: This needs new test user for new request
+TEST_USERNAME = 'iamtestpass_1582830647240' # NOTE: This needs new test user for new request
 TEST_USERPASS = 'Intuit01-'
 
 # ------------------------------------------------------------------------------

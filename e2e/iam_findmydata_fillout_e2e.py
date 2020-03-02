@@ -1,5 +1,5 @@
-# FILE: iam_findmydata_fillout.py
-# DESC: use Selenium with Python to automate filling out FindMyData form
+# FILE: iam_findmydata_fillout_e2e.py
+# DESC: use Selenium with Python to automate filling out FindMyData form on E2E
 from time import sleep
 
 from selenium import webdriver

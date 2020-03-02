@@ -1,5 +1,5 @@
-# FILE: iam_auth_login_e2e.py
-# DESC: use Selenium with Python to automate auth login on E2E
+# FILE: iam_auth_login_prod.py
+# DESC: use Selenium with Python to automate auth login in PROD
 from time import sleep
 
 from selenium import webdriver
@@ -9,22 +9,22 @@ from selenium.webdriver.support.ui import WebDriverWait
 #                                  CONSTANTS
 # ------------------------------------------------------------------------------
 WAIT_TIMEOUT = 20 # seconds
-IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/index.html?iux_v3=true'
-TEST_USERNAME = 'iamtestpass_1581549935015'
-TEST_USERPASS = 'Intuit01-'
+IAM_AUTH_URL_E2E = 'https://accounts.intuit.com/'
+TEST_USERNAME = 'bill@milemarker3.org'  # TEMP: using my personal prod account
+TEST_USERPASS = 'Intuit5678#'   
 
 # ------------------------------------------------------------------------------
 #                            BROWSER-SPECIFIC WEB DRIVERS
 # ------------------------------------------------------------------------------
 
 # FIREFOX - geckodriver
-# browser = webdriver.Firefox()
+browser = webdriver.Firefox()
 
 # CHROME chromedriver (80)
-options = webdriver.ChromeOptions()
-options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
-chrome_driver_binary = "/usr/local/bin/chromedriver"
-browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
+# options = webdriver.ChromeOptions()
+# options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
+# chrome_driver_binary = "/usr/local/bin/chromedriver"
+# browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
 
 # ------------------------------------------------------------------------------
 #                                UTILITY METHODS
@@ -51,4 +51,4 @@ wait_for_elem_select('button[name="SignIn"]').click()
 # Cleanup 
 print("All is Good, About to close the browser")
 sleep(5)
-# browser.close()
+browser.close()

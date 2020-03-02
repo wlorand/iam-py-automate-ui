@@ -10,7 +10,7 @@ from selenium.webdriver.common.keys import Keys
 #                                  CONSTANTS
 # ------------------------------------------------------------------------------
 WAIT_TIMEOUT = 20 # seconds
-IAM_FINDMYDATA_URL_E2E = 'https://accounts-e2e.intuit.com/app/findmydata'
+IAM_FINDMYDATA_URL_E2E = 'https://accounts.intuit.com/app/findmydata'
 NONAUTH_TEST_PERSON = {
     'email':'ashley@rush.com',
     'dob':'03191968',
@@ -28,15 +28,15 @@ NONAUTH_TEST_PERSON = {
 # ------------------------------------------------------------------------------
 
 # FIREFOX - geckodriver
-browser = webdriver.Firefox()
-browser_name = 'firefox'
+# browser = webdriver.Firefox()
+# browser_name = 'firefox'
 
 # CHROME chromedriver (80)
-# options = webdriver.ChromeOptions()
-# options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
-# chrome_driver_binary = "/usr/local/bin/chromedriver"
-# browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
-# browser_name = 'chrome'
+options = webdriver.ChromeOptions()
+options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
+chrome_driver_binary = "/usr/local/bin/chromedriver"
+browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
+browser_name = 'chrome'
 
 # ------------------------------------------------------------------------------
 #                                UTILITY METHODS

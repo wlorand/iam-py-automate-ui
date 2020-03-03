@@ -44,7 +44,7 @@ def wait_for_elem_select(selector):
 browser.get(IAM_AUTH_URL_E2E)
 browser.maximize_window()
 
-# 1: Login to Auth
+# 1: Login to Auth (# TODO - create module for py import)
 wait_for_elem_select('#ius-userid').send_keys(TEST_USERNAME)
 wait_for_elem_select('#ius-password').send_keys(TEST_USERPASS)
 wait_for_elem_select('button[name="SignIn"]').click()

@@ -1,5 +1,5 @@
-# FILE: iam_mydata_delete_flow_auto_e2e.py
-# DESC: use Selenium with Python to automate Delete work order creation on E2E
+# FILE: iam_mydata_delete_flow_auto_nop_e2e.py
+# DESC: use Selenium + Python to automate MyData Delete flow with No Producs on E2E
 from time import sleep
 
 from selenium import webdriver
@@ -13,7 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # ------------------------------------------------------------------------------
 WAIT_TIMEOUT = 20 # seconds
 IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/index.html?iux_v3=true'
-TEST_USERNAME = 'iamtestpass_1582830647240' # NOTE: This needs new test user for new request
+TEST_USERNAME = 'iamtestpass_1583339327734' # With Cancel Request, Can Reuse the Same User!
 TEST_USERPASS = 'Intuit01-'
 
 # ------------------------------------------------------------------------------
@@ -21,13 +21,13 @@ TEST_USERPASS = 'Intuit01-'
 # ------------------------------------------------------------------------------
 
 # FIREFOX - geckodriver
-# browser = webdriver.Firefox()
+browser = webdriver.Firefox()
 
 # CHROME chromedriver (80)
-options = webdriver.ChromeOptions()
-options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
-chrome_driver_binary = "/usr/local/bin/chromedriver"
-browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
+# options = webdriver.ChromeOptions()
+# options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
+# chrome_driver_binary = "/usr/local/bin/chromedriver"
+# browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
 
 # ------------------------------------------------------------------------------
 #                                UTILITY METHODS
@@ -40,11 +40,11 @@ def wait_for_elem_select(selector):
 #                                SCRIPT LOGIC
 # ------------------------------------------------------------------------------
 
-# Tests Auth Delete Flow (No Products) on E2E
+# Tests Auth Delete Flow with No Products on E2E
 browser.get(IAM_AUTH_URL_E2E)
 browser.maximize_window()
 
-# 1: Login to Auth (# TODO - create module for py import)
+# 1: Login to Auth 
 wait_for_elem_select('#ius-userid').send_keys(TEST_USERNAME)
 wait_for_elem_select('#ius-password').send_keys(TEST_USERPASS)
 wait_for_elem_select('button[name="SignIn"]').click()
@@ -69,3 +69,19 @@ wait_for_elem_select('button[data-automation="delete-button"]').click()
 
 # 3.5: Success Page
 wait_for_elem_select('button[data-automation="done-button"]').click()
+
+# 3.6: Back on Cards Page, Click Data & Privacy, Delete Continue, then Cancel Request
+WebDriverWait(browser, WAIT_TIMEOUT).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-automation="deleteManager-Continue-button"]'))).click()
+wait_for_elem_select('button[data-automation="cancel-request-button"]').click()
+
+# 3.7: Cancel Request Page
+wait_for_elem_select('button[data-automation="cancel-request-button"]').click()
+
+# 3.8: Cancel Request Confirm Page
+sleep(3)
+wait_for_elem_select('button[data-automation="close-button"]').click()
+
+# Cleanup 
+print("All is Good, About to close the browser")
+sleep(3)
+browser.close()

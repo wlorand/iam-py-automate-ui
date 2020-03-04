@@ -1,5 +1,5 @@
-# FILE: iam_mydata_delete_flow_auto_nop_prod.py
-# DESC: use Selenium + Python to automate MyData Delete flow with No Product in PROD
+# FILE: iam_mydata_delete_flow_auto_withp_prod.py
+# DESC: use Selenium + Python to automate MyData Delete flow with [Mint] Product in PROD
 from time import sleep
 
 from selenium import webdriver
@@ -13,8 +13,8 @@ from selenium.webdriver.support import expected_conditions as EC
 # ------------------------------------------------------------------------------
 WAIT_TIMEOUT = 20 # seconds
 IAM_AUTH_URL_PROD = 'https://accounts.intuit.com/'
-TEST_USERNAME = 'iamtestpass_1002@mailinator.com' # products: []
-TEST_USERPASS = 'iamtestpass_1002Q!'
+TEST_USERNAME = 'iamtestpass_1003@mailinator.com' # products: [Mint]
+TEST_USERPASS = 'iamtestpass_1003Q!'
 
 # ------------------------------------------------------------------------------
 #                            BROWSER-SPECIFIC WEB DRIVERS
@@ -52,32 +52,36 @@ wait_for_elem_select('button[name="SignIn"]').click()
 # 2: Click Data & Privacy, Delete
 WebDriverWait(browser, WAIT_TIMEOUT).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-automation="deleteManager-Continue-button"]'))).click()
 
-# 3: Move thru the Delete Flow Pages (No Products)
+# 3: Move thru the Delete Flow Pages (Product Flow)
 # 3.1: Primer Page
 wait_for_elem_select('button[data-automation="continue-button"]').click()
 
 # 3.2: Start Page 
 wait_for_elem_select('button[class*="idsButton--primary"]').click()
 
-# 3.3: Delete Acknowledgement Page
-wait_for_elem_select('input[class="idsCheckbox__input"]').click()
-wait_for_elem_select('button[data-automation="continue-button"]').click()
+# 3.3: Product Select Page [Mint]
+wait_for_elem_select('input[data-automation="mt-checkbox"]').click()
+wait_for_elem_select('button[class*="idsButton--primary"]').click()
 
-# 3.4: Delete Confirm Page (No Products)
+# 3.4: Delete Acknowledgement Page
+wait_for_elem_select('input[class*="idsCheckbox__input"]').click()
+wait_for_elem_select('button[class*="idsButton--primary"]').click()
+
+# 3.5: Delete Confirm Page (Products)
 wait_for_elem_select('input[data-automation="password-field"]').send_keys(TEST_USERPASS)
 wait_for_elem_select('button[data-automation="delete-button"]').click()
 
-# 3.5: Success Page
+# 3.6: Success Page
 wait_for_elem_select('button[data-automation="done-button"]').click()
 
-# 3.6: Back on Cards Page, Click Data & Privacy, Delete Continue, then Cancel Request
+# 3.7: Back on Cards Page, Click Data & Privacy, Delete Continue, then Cancel Request
 WebDriverWait(browser, WAIT_TIMEOUT).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-automation="deleteManager-Continue-button"]'))).click()
 wait_for_elem_select('button[data-automation="cancel-request-button"]').click()
 
-# 3.7: Cancel Request Page
+# 3.8: Cancel Request Page
 wait_for_elem_select('button[data-automation="cancel-request-button"]').click()
 
-# 3.8: Cancel Request Confirm Page
+# 3.9: Cancel Request Confirm Page
 sleep(3)
 wait_for_elem_select('button[data-automation="close-button"]').click()
 

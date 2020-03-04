@@ -13,7 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # ------------------------------------------------------------------------------
 WAIT_TIMEOUT = 20 # seconds
 IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/index.html?iux_v3=true'
-TEST_USERNAME = 'iamtestpass_1583339327734' # With Cancel Request, Can Reuse the Same User!
+TEST_USERNAME = 'iamtestpass_1583339327734' # products: []
 TEST_USERPASS = 'Intuit01-'
 
 # ------------------------------------------------------------------------------

@@ -21,13 +21,13 @@ TEST_USERPASS = 'Intuit01-'
 # ------------------------------------------------------------------------------
 
 # FIREFOX - geckodriver
-browser = webdriver.Firefox()
+# browser = webdriver.Firefox()
 
 # CHROME chromedriver (80)
-# options = webdriver.ChromeOptions()
-# options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
-# chrome_driver_binary = "/usr/local/bin/chromedriver"
-# browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
+options = webdriver.ChromeOptions()
+options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
+chrome_driver_binary = "/usr/local/bin/chromedriver"
+browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
 
 # ------------------------------------------------------------------------------
 #                                UTILITY METHODS
@@ -82,7 +82,7 @@ wait_for_elem_select('button[data-automation="cancel-request-button"]').click()
 wait_for_elem_select('button[data-automation="cancel-request-button"]').click()
 
 # 3.9: Cancel Request Confirm Page
-sleep(5)
+sleep(3)
 wait_for_elem_select('button[data-automation="close-button"]').click()
 
 # Cleanup 

@@ -1,5 +1,5 @@
 # FILE: iam_mydata_delete_flow_auto_nop_prod.py
-# DESC: use Selenium + Python to automate MyData Delete flow with No Producs in PROD
+# DESC: use Selenium + Python to automate MyData Delete flow with No Product in PROD
 from time import sleep
 
 from selenium import webdriver
@@ -13,7 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # ------------------------------------------------------------------------------
 WAIT_TIMEOUT = 20 # seconds
 IAM_AUTH_URL_PROD = 'https://accounts.intuit.com/'
-TEST_USERNAME = 'iamtestpass_1002@mailinator.com' 
+TEST_USERNAME = 'iamtestpass_1002@mailinator.com' # products: []
 TEST_USERPASS = 'iamtestpass_1002Q!'
 
 # ------------------------------------------------------------------------------
@@ -21,13 +21,13 @@ TEST_USERPASS = 'iamtestpass_1002Q!'
 # ------------------------------------------------------------------------------
 
 # FIREFOX - geckodriver
-# browser = webdriver.Firefox()
+browser = webdriver.Firefox()
 
 # CHROME chromedriver (80)
-options = webdriver.ChromeOptions()
-options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
-chrome_driver_binary = "/usr/local/bin/chromedriver"
-browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
+# options = webdriver.ChromeOptions()
+# options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
+# chrome_driver_binary = "/usr/local/bin/chromedriver"
+# browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
 
 # ------------------------------------------------------------------------------
 #                                UTILITY METHODS

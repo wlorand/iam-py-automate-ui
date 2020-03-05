@@ -82,6 +82,6 @@ sleep(3)
 wait_for_elem_select('button[data-automation="close-button"]').click()
 
 # Cleanup 
-print("All is Good, About to close the browser")
-sleep(3)
+print("All Good, About to close the browser")
+sleep(2)
 browser.close()

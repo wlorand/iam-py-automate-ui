@@ -1,5 +1,5 @@
 # FILE: iam_mydata_delete_flow_auto_withp_e2e.py
-# DESC: use Selenium + Python to automate MyData Delete flow with [Mint] Product on E2E
+# DESC: use Selenium + Python to automate MyData Delete flow with Products [Mint] on E2E
 from time import sleep
 
 from selenium import webdriver
@@ -59,7 +59,8 @@ wait_for_elem_select('button[data-automation="continue-button"]').click()
 # 3.2: Start Page 
 wait_for_elem_select('button[class*="idsButton--primary"]').click()
 
-# 3.3: Product Select Page [Mint]
+# 3.3: Delete Product Select Page [Mint]
+sleep(2)
 wait_for_elem_select('input[data-automation="mt-checkbox"]').click()
 wait_for_elem_select('button[class*="idsButton--primary"]').click()
 

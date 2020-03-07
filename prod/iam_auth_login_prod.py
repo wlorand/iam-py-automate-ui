@@ -1,54 +1,72 @@
 # FILE: iam_auth_login_prod.py
-# DESC: use Selenium with Python to automate auth login in PROD
+# DESC: use Selenium + Python to automate IAM Auth Login on PROD
 from time import sleep
 
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
-# ------------------------------------------------------------------------------
-#                                  CONSTANTS
-# ------------------------------------------------------------------------------
-WAIT_TIMEOUT = 20 # seconds
-IAM_AUTH_URL_E2E = 'https://accounts.intuit.com/'
-TEST_USERNAME = 'bill@milemarker3.org'  # TEMP: using my personal prod account
-TEST_USERPASS = 'Intuit5678#'   
+# ---------- ---------- ---------- ---------- ---------- 
+# CONSTANTS
+# ---------- ---------- ---------- ---------- ----------
+WAIT_TIMEOUT = 20 
+IAM_AUTH_URL_PROD = 'https://accounts.intuit.com/'
+TEST_USERNAME = 'iamtestpass_1583535613169' # products: [] 
+TEST_USERPASS = 'Intuit01-'   
 
-# ------------------------------------------------------------------------------
-#                            BROWSER-SPECIFIC WEB DRIVERS
-# ------------------------------------------------------------------------------
+# ---------- ---------- ---------- ---------- ---------- 
+# BROWSER-SPECIFIC WEB DRIVERS
+# ---------- ---------- ---------- ---------- ---------- 
 
 # FIREFOX - geckodriver
 browser = webdriver.Firefox()
 
 # CHROME chromedriver (80)
-# options = webdriver.ChromeOptions()
-# options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
-# chrome_driver_binary = "/usr/local/bin/chromedriver"
-# browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
+options = webdriver.ChromeOptions()
+options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
+chrome_driver_binary = "/usr/local/bin/chromedriver"
+browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
 
-# ------------------------------------------------------------------------------
-#                                UTILITY METHODS
-# ------------------------------------------------------------------------------
+# ---------- ---------- ---------- ---------- ----------  
+# UTILITY METHODS
+# ---------- ---------- ---------- ---------- ----------
 
 def wait_for_elem_select(selector):
     return WebDriverWait(browser, WAIT_TIMEOUT).until(lambda browser: browser.find_element_by_css_selector(selector))
 
-# ------------------------------------------------------------------------------
-#                                SCRIPT LOGIC
-# ------------------------------------------------------------------------------
+# ---------- ---------- ---------- ---------- ---------- 
+# SCRIPT LOGIC
+# ---------- ---------- ---------- ---------- ----------
 
-# Tests Auth Login on E2E
-browser.get(IAM_AUTH_URL_E2E)
-browser.maximize_window()
+while True:
+    try:
+        # Tests Auth Login on E2E
+        browser.get(IAM_AUTH_URL_PROD)
+        browser.maximize_window()
 
-# 1.1: Enter User/Pass
-wait_for_elem_select('#ius-userid').send_keys(TEST_USERNAME)
-wait_for_elem_select('#ius-password').send_keys(TEST_USERPASS)
+        # 1.1: Enter User/Pass
+        wait_for_elem_select('#ius-userid').send_keys(TEST_USERNAME)
+        wait_for_elem_select('#ius-password').send_keys(TEST_USERPASS)
 
-# 1.2: Click Sign-In Button
-wait_for_elem_select('button[name="SignIn"]').click()
+        # 1.2: Click Sign-In Button
+        sleep(2)
+        wait_for_elem_select('button[name="SignIn"]').click()
 
-# Cleanup 
-print("All is Good, About to close the browser")
-sleep(5)
-browser.close()
+        # 1.3: Confirm IAM Cards Overview Page Loaded
+        sleep(5)
+        assert 'Intuit Accounts - Account Manager' in browser.title 
+
+    except TimeoutException:
+        print("Oops - got a TimeoutException...let's try again")
+        continue 
+    except NoSuchElementException:
+        print("Drat - DOM Element Not Found -- Time to Die!")
+        break
+    else:
+        print("Script ran with No Exceptions")
+    finally:
+        # Cleanup 
+        print("About to close the browser")
+        sleep(2)
+        browser.close()
+        break

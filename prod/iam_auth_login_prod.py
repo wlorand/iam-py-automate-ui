@@ -19,7 +19,7 @@ TEST_USERPASS = 'Intuit01-'
 # ---------- ---------- ---------- ---------- ---------- 
 
 # FIREFOX - geckodriver
-browser = webdriver.Firefox()
+# browser = webdriver.Firefox()
 
 # CHROME chromedriver (80)
 options = webdriver.ChromeOptions()

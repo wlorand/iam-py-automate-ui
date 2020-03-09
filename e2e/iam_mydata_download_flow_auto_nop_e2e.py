@@ -11,7 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # ------------------------------------------------------------------------------
 #                                  CONSTANTS
 # ------------------------------------------------------------------------------
-WAIT_TIMEOUT = 20 # seconds
+WAIT_TIMEOUT = 30 
 IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/index.html' # TODO: add raids query param
 TEST_USERNAME = 'iamtestpass_1583381438838' # products: []
 TEST_USERPASS = 'Intuit01-'
@@ -51,7 +51,7 @@ sleep(2)
 wait_for_elem_select('button[name="SignIn"]').click()
 
 # 2: Click Data & Privacy, Download 
-sleep(2)
+sleep(10)
 WebDriverWait(browser, WAIT_TIMEOUT).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-automation="downloadManager-Continue-button"]'))).click()
 
 # 3: Move thru the Download Flow Pages (No Products)

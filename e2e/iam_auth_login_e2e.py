@@ -9,8 +9,8 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 # ---------- ---------- ---------- ---------- ---------- 
 # CONSTANTS
 # ---------- ---------- ---------- ---------- ----------
-WAIT_TIMEOUT = 20 
-IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/index.html?iux_v3=true'
+WAIT_TIMEOUT = 30 
+IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/'
 TEST_USERNAME = 'iamtestpass_1581549935015' # products: []
 TEST_USERPASS = 'Intuit01-'
 
@@ -49,11 +49,11 @@ while True:
         wait_for_elem_select('#ius-password').send_keys(TEST_USERPASS)
 
         # 1.2: Click Sign-In Button
-        sleep(2)
+        sleep(3)
         wait_for_elem_select('button[name="SignIn"]').click()
 
         # 1.3: Confirm IAM Cards Overview Page Loaded
-        sleep(5)
+        sleep(8)
         assert 'Intuit Accounts - Account Manager' in browser.title 
         
     except TimeoutException:
@@ -67,6 +67,6 @@ while True:
     finally:
         # Cleanup 
         print("About to close the browser")
-        sleep(2)
+        sleep(3)
         browser.close()
         break

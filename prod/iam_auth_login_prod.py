@@ -38,9 +38,9 @@ def wait_for_elem_select(selector):
 # SCRIPT LOGIC
 # ---------- ---------- ---------- ---------- ----------
 
+# Tests Auth Login on E2E
 while True:
     try:
-        # Tests Auth Login on E2E
         browser.get(IAM_AUTH_URL_PROD)
         browser.maximize_window()
 
@@ -49,11 +49,11 @@ while True:
         wait_for_elem_select('#ius-password').send_keys(TEST_USERPASS)
 
         # 1.2: Click Sign-In Button
-        sleep(2)
+        sleep(3)
         wait_for_elem_select('button[name="SignIn"]').click()
 
         # 1.3: Confirm IAM Cards Overview Page Loaded
-        sleep(5)
+        sleep(8)
         assert 'Intuit Accounts - Account Manager' in browser.title 
 
     except TimeoutException:
@@ -67,6 +67,6 @@ while True:
     finally:
         # Cleanup 
         print("About to close the browser")
-        sleep(2)
+        sleep(3)
         browser.close()
         break

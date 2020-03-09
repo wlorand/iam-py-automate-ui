@@ -14,8 +14,8 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 # ---------- ---------- ---------- ---------- ----------
 WAIT_TIMEOUT = 30 
 IAM_AUTH_URL_PROD = 'https://accounts.intuit.com/'
-TEST_USERNAME = 'iamtestpass_4366@mailinator.com' # (new user: 3/9) products: [Mint]
-TEST_USERPASS = 'iamtestpass_4366Q!'
+TEST_USERNAME = 'iamtestpass_69@mailinator.com' # (new user2: 3/9) products: [Mint]
+TEST_USERPASS = 'Intuit69-'
 
 # ---------- ---------- ---------- ---------- ---------- 
 # BROWSER-SPECIFIC WEB DRIVERS

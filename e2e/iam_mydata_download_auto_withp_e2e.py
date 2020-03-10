@@ -1,5 +1,5 @@
-# FILE: iam_mydata_delete_auto_withp_e2e.py
-# DESC: use Selenium + Python to automate MyData Delete flow with Products [Mint] on E2E
+# FILE: iam_mydata_download_flow_auto_withp_e2e.py
+# use Selenium + Python to automate MyData Download flow with Products [Turbo] on E2E
 from time import sleep
 
 from selenium import webdriver
@@ -12,9 +12,9 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 # ---------- ---------- ---------- ---------- ---------- 
 # CONSTANTS
 # ---------- ---------- ---------- ---------- ----------
-WAIT_TIMEOUT = 30
-IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/'
-TEST_USERNAME = 'iamtestpass_1583346528592' # products: [Mint]
+WAIT_TIMEOUT = 30 
+IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/' # TODO: add raids query param 
+TEST_USERNAME = 'iamtestpass_1583382121680' # products: [Turbo]
 TEST_USERPASS = 'Intuit01-'
 
 # ---------- ---------- ---------- ---------- ---------- 
@@ -41,62 +41,45 @@ def wait_for_elem_select(selector):
 # SCRIPT LOGIC 
 # ---------- ---------- ---------- ---------- ----------
 
-# Tests Auth Delete Flow with Products on E2E
+# Tests Auth Download Flow (With Products) on E2E
 while True:
     try:
         browser.get(IAM_AUTH_URL_E2E)
         browser.maximize_window()
 
-        # 1: Login to Auth 
+        # 1: Login to Auth
         wait_for_elem_select('#ius-userid').send_keys(TEST_USERNAME)
         wait_for_elem_select('#ius-password').send_keys(TEST_USERPASS)
         sleep(3)
         wait_for_elem_select('button[name="SignIn"]').click()
 
-        # 2: Click Data & Privacy, Delete
+        # 2: Click Data & Privacy, Download 
         sleep(8)
-        WebDriverWait(browser, WAIT_TIMEOUT).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-automation="deleteManager-Continue-button"]'))).click()
+        WebDriverWait(browser, WAIT_TIMEOUT).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-automation="downloadManager-Continue-button"]'))).click()
 
-        # 3: Move thru the Delete Flow Pages (Product Flow)
-        # 3.1: Primer Page
+        # 3: Move thru the Download Flow Pages (With Products)
+        # 3.1: Download Primer Page
         sleep(3)
         wait_for_elem_select('button[data-automation="continue-button"]').click()
 
-        # 3.2: Start Page 
+        # 3.2: Download Start Page
         sleep(3)
+        wait_for_elem_select('button[data-automation="continue-button"]').click()
+
+        # 3.3: Download Product Select Page [Turbo]
+        sleep(3)
+        wait_for_elem_select('input[data-automation="tb-checkbox"]').click()
         wait_for_elem_select('button[class*="idsButton--primary"]').click()
 
-        # 3.3: Delete Product Select Page [Mint]
-        sleep(3)
-        wait_for_elem_select('input[data-automation="mt-checkbox"]').click()
-        wait_for_elem_select('button[class*="idsButton--primary"]').click()
-
-        # 3.4: Delete Acknowledgement Page
-        sleep(3)
-        wait_for_elem_select('input[class*="idsCheckbox__input"]').click()
-        wait_for_elem_select('button[class*="idsButton--primary"]').click()
-
-        # 3.5: Delete Confirm Page (Products)
+        # 3.4: Download Confirm Page 
         sleep(3)
         wait_for_elem_select('input[data-automation="password-field"]').send_keys(TEST_USERPASS)
-        wait_for_elem_select('button[data-automation="delete-button"]').click()
+        # TODO: Uncomment work order creation when Download scripts prove to be repeatable (w/raids)
+        # wait_for_elem_select('button[data-automation="continue-button"]').click()
 
-        # 3.6: Success Page
-        sleep(3)
-        wait_for_elem_select('button[data-automation="done-button"]').click()
-
-        # 3.7: Back on Cards Page, Click Data & Privacy, Delete Continue, then Cancel Request
-        sleep(8)
-        WebDriverWait(browser, WAIT_TIMEOUT).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-automation="deleteManager-Continue-button"]'))).click()
-        wait_for_elem_select('button[data-automation="cancel-request-button"]').click()
-
-        # 3.8: Cancel Request Page
-        sleep(3)
-        wait_for_elem_select('button[data-automation="cancel-request-button"]').click()
-
-        # 3.9: Cancel Request Confirm Page
-        sleep(3)
-        wait_for_elem_select('button[data-automation="close-button"]').click()
+        # 3.5: Download Success Page
+        # sleep(3)
+        # wait_for_elem_select('button[data-automation="done-button"]').click()
 
     except TimeoutException:
         print("Oops - got a TimeoutException...let's try again")

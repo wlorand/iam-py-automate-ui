@@ -9,7 +9,7 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 # ---------- ---------- ---------- ---------- ---------- 
 # CONSTANTS
 # ---------- ---------- ---------- ---------- ----------
-WAIT_TIMEOUT = 20 
+WAIT_TIMEOUT = 30 
 IAM_AUTH_URL_PROD = 'https://accounts.intuit.com/'
 TEST_USERNAME = 'iamtestpass_1583535613169' # products: [] 
 TEST_USERPASS = 'Intuit01-'   

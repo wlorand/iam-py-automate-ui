@@ -38,9 +38,9 @@ def wait_for_elem_select(selector):
 # SCRIPT LOGIC 
 # ---------- ---------- ---------- ---------- ----------
 
+# Tests Auth Login on E2E
 while True:
     try:
-        # Tests Auth Login on E2E
         browser.get(IAM_AUTH_URL_E2E)
         browser.maximize_window()
 

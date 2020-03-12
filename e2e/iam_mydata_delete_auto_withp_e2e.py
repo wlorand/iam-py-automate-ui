@@ -41,7 +41,7 @@ def wait_for_elem_select(selector):
 # SCRIPT LOGIC 
 # ---------- ---------- ---------- ---------- ----------
 
-# Tests Auth Delete Flow with No Products on E2E
+# Tests Auth Delete Flow with Products on E2E
 while True:
     try:
         browser.get(IAM_AUTH_URL_E2E)

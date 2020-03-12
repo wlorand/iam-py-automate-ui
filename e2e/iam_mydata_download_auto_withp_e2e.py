@@ -1,17 +1,20 @@
-# FILE: iam_auth_login_e2e.py
-# DESC: use Selenium + Python to automate IAM Auth Login to E2E
+# FILE: iam_mydata_download_flow_auto_withp_e2e.py
+# use Selenium + Python to automate MyData Download flow with Products [Turbo] on E2E
 from time import sleep
 
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
 # ---------- ---------- ---------- ---------- ---------- 
 # CONSTANTS
 # ---------- ---------- ---------- ---------- ----------
 WAIT_TIMEOUT = 30 
-IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/'
-TEST_USERNAME = 'iamtestpass_1581549935015' # products: []
+IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/' # TODO: add raids query param 
+TEST_USERNAME = 'iamtestpass_1583382121680' # products: [Turbo]
 TEST_USERPASS = 'Intuit01-'
 
 # ---------- ---------- ---------- ---------- ---------- 
@@ -38,24 +41,46 @@ def wait_for_elem_select(selector):
 # SCRIPT LOGIC 
 # ---------- ---------- ---------- ---------- ----------
 
-# Tests Auth Login on E2E
+# Tests Auth Download Flow (With Products) on E2E
 while True:
     try:
         browser.get(IAM_AUTH_URL_E2E)
         browser.maximize_window()
 
-        # 1.1: Enter User/Pass
+        # 1: Login to Auth
         wait_for_elem_select('#ius-userid').send_keys(TEST_USERNAME)
         wait_for_elem_select('#ius-password').send_keys(TEST_USERPASS)
-
-        # 1.2: Click Sign-In Button
         sleep(3)
         wait_for_elem_select('button[name="SignIn"]').click()
 
-        # 1.3: Confirm IAM Cards Overview Page Loaded
+        # 2: Click Data & Privacy, Download 
         sleep(8)
-        assert 'Intuit Accounts - Account Manager' in browser.title 
-        
+        WebDriverWait(browser, WAIT_TIMEOUT).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-automation="downloadManager-Continue-button"]'))).click()
+
+        # 3: Move thru the Download Flow Pages (With Products)
+        # 3.1: Download Primer Page
+        sleep(3)
+        wait_for_elem_select('button[data-automation="continue-button"]').click()
+
+        # 3.2: Download Start Page
+        sleep(3)
+        wait_for_elem_select('button[data-automation="continue-button"]').click()
+
+        # 3.3: Download Product Select Page [Turbo]
+        sleep(3)
+        wait_for_elem_select('input[data-automation="tb-checkbox"]').click()
+        wait_for_elem_select('button[class*="idsButton--primary"]').click()
+
+        # 3.4: Download Confirm Page 
+        sleep(3)
+        wait_for_elem_select('input[data-automation="password-field"]').send_keys(TEST_USERPASS)
+        # TODO: Uncomment work order creation when Download scripts prove to be repeatable (w/raids)
+        # wait_for_elem_select('button[data-automation="continue-button"]').click()
+
+        # 3.5: Download Success Page
+        # sleep(3)
+        # wait_for_elem_select('button[data-automation="done-button"]').click()
+
     except TimeoutException:
         print("Oops - got a TimeoutException...let's try again")
         continue 

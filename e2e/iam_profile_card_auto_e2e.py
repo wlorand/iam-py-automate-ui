@@ -1,5 +1,5 @@
-# FILE: iam_card_personal_info_auto_e2e.py
-# DESC: use Selenium + Python to automate IAM Personal Info Card in E2E
+# FILE: iam_profile_card_auto_e2e.py
+# DESC: use Selenium + Python to automate IAM Profile Card User Interactions in E2E
 from time import sleep
 
 from selenium import webdriver
@@ -42,7 +42,7 @@ def wait_for_elem_select(selector):
 # SCRIPT LOGIC 
 # ---------- ---------- ---------- ---------- ----------
 
-# Tests IAM Personal Info Card
+# Tests IAM Profile Card User Interactions
 while True:
     try:
         browser.get(IAM_AUTH_URL_E2E)
@@ -60,7 +60,7 @@ while True:
         sleep(8)
         assert 'Intuit Accounts - Account Manager' in browser.title 
         
-        # 2.0: Click Personal Info, Edit on Name sub-card
+        # 2.0: Click Personal Info (Profile), Edit on Name sub-widget
          
 
 

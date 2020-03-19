@@ -4,9 +4,9 @@ from time import sleep
 
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
-
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
@@ -15,7 +15,8 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 # ---------- ---------- ---------- ---------- ----------
 WAIT_TIMEOUT = 30 
 IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/'
-TEST_USERNAME = 'iamtestpass_1584036796995' 
+IAM_AUTH_URL_LOCAL = 'https://accounts-e2e.intuit.com/index.html?iam-account-manager-ui.local=true'
+TEST_USERNAME = 'iamtestpass_1584639773308' 
 TEST_USERPASS = 'Intuit01-'
 
 # ---------- ---------- ---------- ---------- ---------- 
@@ -45,7 +46,8 @@ def wait_for_elem_select(selector):
 # Tests IAM Profile Card User Interactions
 while True:
     try:
-        browser.get(IAM_AUTH_URL_E2E)
+        # browser.get(IAM_AUTH_URL_E2E)
+        browser.get(IAM_AUTH_URL_LOCAL)
         browser.maximize_window()
 
         # 1.1: Enter User/Pass
@@ -57,12 +59,22 @@ while True:
         wait_for_elem_select('button[name="SignIn"]').click()
 
         # 1.3: Confirm IAM Cards Overview Page Loaded
-        sleep(8)
+        sleep(5)
         assert 'Intuit Accounts - Account Manager' in browser.title 
         
-        # 2.0: Click Personal Info (Profile), Edit on Name sub-widget
-         
+        
+        # 2: Profile Card > Name Widget Add Interaction 
+        # 2.0: Scroll Down to Profile Card
+        browser.execute_script("window.scrollTo(0, 900);") # Chrome needs xtra 100 pixels (automated software ribbon)
+    
+        # 2.1: Click Add Your Name
+        WebDriverWait(browser, WAIT_TIMEOUT).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-automation="iam-add-name-link-btn"]'))).click()
 
+        # 2.2: Enter Name and Save 
+        sleep(3)
+        wait_for_elem_select('input[id="ius-first-name"]').send_keys('Will')
+        wait_for_elem_select('input[id="ius-last-name"]').send_keys('Cody')
+        sleep(5)
 
     except TimeoutException:
         print("Oops - got a TimeoutException...let's try again")
@@ -75,6 +87,6 @@ while True:
     finally:
         # Cleanup 
         print("About to close the browser")
-        sleep(20)
+        sleep(5)
         browser.close()
         break

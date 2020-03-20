@@ -24,13 +24,13 @@ TEST_USERPASS = 'Intuit01-'
 # ---------- ---------- ---------- ---------- ---------- 
 
 # FIREFOX - geckodriver
-# browser = webdriver.Firefox()
+browser = webdriver.Firefox()
 
 # CHROME chromedriver (80)
-options = webdriver.ChromeOptions()
-options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
-chrome_driver_binary = "/usr/local/bin/chromedriver"
-browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
+# options = webdriver.ChromeOptions()
+# options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
+# chrome_driver_binary = "/usr/local/bin/chromedriver"
+# browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
 
 # ---------- ---------- ---------- ---------- ----------  
 # UTILITY METHODS
@@ -59,22 +59,30 @@ while True:
         wait_for_elem_select('button[name="SignIn"]').click()
 
         # 1.3: Confirm IAM Cards Overview Page Loaded
-        sleep(5)
+        sleep(8)
         assert 'Intuit Accounts - Account Manager' in browser.title 
         
         
         # 2: Profile Card > Name Widget Add Interaction 
         # 2.0: Scroll Down to Profile Card
         browser.execute_script("window.scrollTo(0, 900);") # Chrome needs xtra 100 pixels (automated software ribbon)
-    
+        sleep(3)
+
         # 2.1: Click Add Your Name
         WebDriverWait(browser, WAIT_TIMEOUT).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-automation="iam-add-name-link-btn"]'))).click()
 
-        # 2.2: Enter Name and Save 
+        # 2.2: Enter Name 
         sleep(3)
         wait_for_elem_select('input[id="ius-first-name"]').send_keys('Will')
         wait_for_elem_select('input[id="ius-last-name"]').send_keys('Cody')
+        
+        # 2.3 Click Save (will collapse name widget)
+        sleep(3)
+        wait_for_elem_select('button[id="ius-fullname-manager-btn-save"]').click()
+
+        # temp 2.4: save screenshot (png)
         sleep(5)
+        browser.save_screenshot('screenshots/iam-profile-card-name-auto-e2e.png')
 
     except TimeoutException:
         print("Oops - got a TimeoutException...let's try again")

@@ -15,8 +15,7 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 # ---------- ---------- ---------- ---------- ----------
 WAIT_TIMEOUT = 30 
 IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/'
-# IAM_AUTH_URL_LOCAL = 'https://accounts-e2e.intuit.com/index.html?iam-account-manager-ui.local=true'
-TEST_USERNAME = 'iamtestpass_1585086735359'  # Add Flow test user 
+TEST_USERNAME = 'iamtestpass_1585169492833'  # Add Flow test user 
 TEST_USERPASS = 'Intuit01-'
 
 # ---------- ---------- ---------- ---------- ---------- 
@@ -53,7 +52,6 @@ def wait_for_elements_select(selector):
 while True:
     try:
         browser.get(IAM_AUTH_URL_E2E)
-        # browser.get(IAM_AUTH_URL_LOCAL)
         browser.maximize_window()
 
         # 1.1: Enter User/Pass
@@ -90,58 +88,69 @@ while True:
         sleep(3)
         wait_for_elem_select('button[id="ius-fullname-manager-btn-save"]').click()
         
-        # 3.0: Locate DOM Elements, save as PY List (no unique DOM handle exists to locate required element)
-        add_link_buttons = wait_for_elements_select('button[data-automation="iam-collapsible-product-link-btn"]')
-        print(len(add_link_buttons)) # 2 (1- Add your DOB; 2- Add Your occupation)
+        # 3: DOB, Occupation form fill only working in Firefox # TODO: try EC for Chrome
+        if browser_name == 'firefox':
+            # 3.0: Locate DOM Elements, save as PY List (no unique DOM handle exists to locate required element)
+            add_link_buttons = wait_for_elements_select('button[data-automation="iam-collapsible-product-link-btn"]')
+            print(len(add_link_buttons)) # 2 (1- Add your DOB; 2- Add Your occupation)
         
-        # 3.1: Add Flow: Click 'Add Your Date of Birth'
-        sleep(3)
-        add_link_buttons[0].click() # should open the DOB widget
+            # 3.1: Add Flow: Click 'Add Your Date of Birth'
+            sleep(3)
+            add_link_buttons[0].click() # should open the DOB widget
 
-        # 3.2: Add Flow: Enter DOB 
-        wait_for_elem_select('input[id="dob-input-form-field"]').send_keys('05/05/1975')
+            # 3.2: Add Flow: Enter DOB 
+            wait_for_elem_select('input[id="dob-input-form-field"]').send_keys('05/05/1975')
 
-        # 3.3: Add Flow: DOB:  Click Save (will collapse DOB widget)
-        sleep(3)
-        wait_for_elem_select('button[id="dob-save-btn"]').click()
+            # 3.3: Add Flow: DOB:  Click Save (will collapse DOB widget)
+            sleep(3)
+            wait_for_elem_select('button[id="dob-save-btn"]').click()
 
-        # 4.1: Add Flow: Click 'Add Your Occupation'
-        sleep(3)
-        add_link_buttons[1].click()
+            # 4.1: Add Flow: Click 'Add Your Occupation'
+            sleep(3)
+            add_link_buttons[1].click()
 
-        # 4.2: Add Flow: Enter Occupation
-        wait_for_elem_select('input[id="occupation-input-form-field"]').send_keys('Fictional Hitman')
+            # 4.2: Add Flow: Enter Occupation
+            wait_for_elem_select('input[id="occupation-input-form-field"]').send_keys('Fictional Hitman')
 
-        # 4.3: Add Flow: Occupation: Click Save (will collapse Occupation widget)
-        sleep(3)
-        wait_for_elem_select('button[id="occupation-save-btn"]').click()
+            # 4.3: Add Flow: Occupation: Click Save (will collapse Occupation widget)
+            sleep(3)
+            wait_for_elem_select('button[id="occupation-save-btn"]').click()
         
         # 5.1: Add Flow: Click 'Add Your Address'
         sleep(3)
         wait_for_elem_select('button[data-automation="iam-add-address-link-btn"]').click()
-        # Scroll Down 300 pixels
-        browser.execute_script("window.scrollBy(0, 300);")
-        
-        # 5.2: Add Flow: Fill in Address Fields
-        # 5.2.1: Country (+ TAB)
+        # 5.2: Scroll Down for Expanded Address widget
+        if browser_name == 'firefox':
+            browser.execute_script("window.scrollBy(0, 300);")
+        elif browser_name == 'chrome':
+            browser.execute_script("window.scrollBy(0, 350);")
+
+        # 5.3: Add Flow: Fill in Address Fields
+        # 5.3.1: Country (+ TAB)
         sleep(3)
         wait_for_elem_select('input[data-automation="ius-country"]').send_keys('United States')
         wait_for_elem_select('input[data-automation="ius-country"]').send_keys(Keys.TAB)
-        # 5.2.2: Street Address
+        # 5.3.2: Street Address
         wait_for_elem_select('input[id="ius-street"]').send_keys('33 Emerald Street')
-        # 5.2.3: Address Line 2
+        # 5.3.3: Address Line 2
         wait_for_elem_select('input[id="ius-street-2"]').send_keys('Suite 666')
-        # 5.2.4: City
+        # 5.3.4: City
         wait_for_elem_select('input[id="ius-city"]').send_keys('Redondo Beach')
-        # 5.2.5: State (+ TAB)
+        # 5.3.5: State (+ TAB)
         wait_for_elem_select('input[id="idsDropdownTypeaheadTextField4"]').send_keys('California')
         wait_for_elem_select('input[id="idsDropdownTypeaheadTextField4"]').send_keys(Keys.TAB)
-        # 5.2.6: Zip
+        # 5.3.6: Zip
         wait_for_elem_select('input[id="ius-zip-code"]').send_keys('90277')
-        # 5.3: Add Flow: Address: Click Save (will collapse Address widget)
+        # 5.4: Add Flow: Address: Click Save (will collapse Address widget)
         sleep(3)
         wait_for_elem_select('button[id="ius-address-manager-btn-save"]').click()
 
+        # 5.5: Scroll Back Up for collapsed Address widget
+        if browser_name == 'firefox':
+            browser.execute_script("window.scrollBy(0, -300);")
+        if browser_name == 'chrome':
+            browser.execute_script("window.scrollBy(0, -350);")
+        
         # 9: Add Flow: save screenshot (png)
         sleep(5)
         if browser_name == 'firefox':

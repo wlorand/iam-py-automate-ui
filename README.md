@@ -1,4 +1,4 @@
-# iam-dg-browser-automate-py
+# iam-dg-automate-ui
 **Python Selenium scripts that perform browser automation tasks for the DG2 / mydata project.**<br />
 While these scripts are designed to be deployed to AppDyanmics, <br />
 please follow the instructions below to get the scripts running locally from the command line 
@@ -17,7 +17,7 @@ These instructions assume you have [Homebrew](https://brew.sh/) running on a Mac
     3.3- place the unix .exe files in /usr/local/bin and confirm this dir in your $PATH via
         <pre><code>$ echo $PATH</code></pre>
 4. Run any of the available scripts here via the command line (with only one driver uncommented)
-        <pre><code>$ python3 iam_auth_login.py</code></pre>
+        <pre><code>$ python3 iam_auth_login_prod.py</code></pre>
 
 
 

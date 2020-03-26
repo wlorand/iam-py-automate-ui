@@ -1,5 +1,5 @@
-# FILE: iam_profile_card_auto_e2e.py
-# DESC: use Selenium + Python to automate IAM Profile Card User Interactions in E2E
+# FILE: iam_profile_card_add_info_auto_e2e.py
+# DESC: use Selenium + Python to automate IAM Profile Card Add Info in E2E
 from time import sleep
 
 from selenium import webdriver
@@ -15,8 +15,20 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 # ---------- ---------- ---------- ---------- ----------
 WAIT_TIMEOUT = 30 
 IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/'
-TEST_USERNAME = 'iamtestpass_1585169492833'  # Add Flow test user 
+TEST_USERNAME = 'iamtestpass_1585248235939'  
 TEST_USERPASS = 'Intuit01-'
+TEST_PROFILE_INFO = {
+    'fname': 'Vincent',
+	'lname': 'Vega',
+	'dob': '05/05/1975',
+	'occupation': 'Hitman-Cowboy',
+	'country': 'United States', 
+	'street': '33 Emerald Street',
+	'street-2': 'Suite 666',
+	'city': 'Redondo Beach',
+	'state': 'California',
+	'zip': '90277'
+}
 
 # ---------- ---------- ---------- ---------- ---------- 
 # BROWSER-SPECIFIC WEB DRIVERS
@@ -62,6 +74,9 @@ while True:
         sleep(3)
         wait_for_elem_select('button[name="SignIn"]').click()
 
+        #1.3: Add Current Mobile Number - Skip For Now (new user only)
+        # wait_for_elem_select('button[id="ius-verified-user-update-btn-skip"]').click()
+
         # 1.3: Confirm IAM Cards Overview Page Loaded
         sleep(8)
         assert 'Intuit Accounts - Account Manager' in browser.title 
@@ -81,8 +96,8 @@ while True:
         WebDriverWait(browser, WAIT_TIMEOUT).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[data-automation="iam-add-name-link-btn"]'))).click()
 
         # 2.2: Add Flow: Enter Name 
-        wait_for_elem_select('input[id="ius-first-name"]').send_keys('Vincent')
-        wait_for_elem_select('input[id="ius-last-name"]').send_keys('Vega')
+        wait_for_elem_select('input[id="ius-first-name"]').send_keys(TEST_PROFILE_INFO['fname'])
+        wait_for_elem_select('input[id="ius-last-name"]').send_keys(TEST_PROFILE_INFO['lname'])
         
         # 2.3 Add Flow: Name: Click Save (will collapse name widget)
         sleep(3)
@@ -99,7 +114,7 @@ while True:
             add_link_buttons[0].click() # should open the DOB widget
 
             # 3.2: Add Flow: Enter DOB 
-            wait_for_elem_select('input[id="dob-input-form-field"]').send_keys('05/05/1975')
+            wait_for_elem_select('input[id="dob-input-form-field"]').send_keys(TEST_PROFILE_INFO['dob'])
 
             # 3.3: Add Flow: DOB:  Click Save (will collapse DOB widget)
             sleep(3)
@@ -110,7 +125,7 @@ while True:
             add_link_buttons[1].click()
 
             # 4.2: Add Flow: Enter Occupation
-            wait_for_elem_select('input[id="occupation-input-form-field"]').send_keys('Fictional Hitman')
+            wait_for_elem_select('input[id="occupation-input-form-field"]').send_keys(TEST_PROFILE_INFO['occupation'])
 
             # 4.3: Add Flow: Occupation: Click Save (will collapse Occupation widget)
             sleep(3)
@@ -128,19 +143,19 @@ while True:
         # 5.3: Add Flow: Fill in Address Fields
         # 5.3.1: Country (+ TAB)
         sleep(3)
-        wait_for_elem_select('input[data-automation="ius-country"]').send_keys('United States')
+        wait_for_elem_select('input[data-automation="ius-country"]').send_keys(TEST_PROFILE_INFO['country'])
         wait_for_elem_select('input[data-automation="ius-country"]').send_keys(Keys.TAB)
         # 5.3.2: Street Address
-        wait_for_elem_select('input[id="ius-street"]').send_keys('33 Emerald Street')
+        wait_for_elem_select('input[id="ius-street"]').send_keys(TEST_PROFILE_INFO['street'])
         # 5.3.3: Address Line 2
-        wait_for_elem_select('input[id="ius-street-2"]').send_keys('Suite 666')
+        wait_for_elem_select('input[id="ius-street-2"]').send_keys(TEST_PROFILE_INFO['street-2'])
         # 5.3.4: City
-        wait_for_elem_select('input[id="ius-city"]').send_keys('Redondo Beach')
+        wait_for_elem_select('input[id="ius-city"]').send_keys(TEST_PROFILE_INFO['city'])
         # 5.3.5: State (+ TAB)
-        wait_for_elem_select('input[id="idsDropdownTypeaheadTextField4"]').send_keys('California')
+        wait_for_elem_select('input[id="idsDropdownTypeaheadTextField4"]').send_keys(TEST_PROFILE_INFO['state'])
         wait_for_elem_select('input[id="idsDropdownTypeaheadTextField4"]').send_keys(Keys.TAB)
         # 5.3.6: Zip
-        wait_for_elem_select('input[id="ius-zip-code"]').send_keys('90277')
+        wait_for_elem_select('input[id="ius-zip-code"]').send_keys(TEST_PROFILE_INFO['zip'])
         # 5.4: Add Flow: Address: Click Save (will collapse Address widget)
         sleep(3)
         wait_for_elem_select('button[id="ius-address-manager-btn-save"]').click()
@@ -154,9 +169,9 @@ while True:
         # 9: Add Flow: save screenshot (png)
         sleep(5)
         if browser_name == 'firefox':
-            browser.save_screenshot('screenshots/iam-profile-card-auto-firefox-e2e.png')
+            browser.save_screenshot('screenshots/profile-card-add-auto-firefox-e2e.png')
         elif browser_name == 'chrome':
-            browser.save_screenshot('screenshots/iam-profile-card-auto-chrome-e2e.png')
+            browser.save_screenshot('screenshots/profile-card-add-auto-chrome-e2e.png')
 
     except TimeoutException:
         print("Oops - got a TimeoutException...let's try again")

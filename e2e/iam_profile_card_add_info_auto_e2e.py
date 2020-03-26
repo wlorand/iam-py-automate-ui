@@ -15,7 +15,7 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 # ---------- ---------- ---------- ---------- ----------
 WAIT_TIMEOUT = 30 
 IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/'
-TEST_USERNAME = 'iamtestpass_1585248235939'  
+TEST_USERNAME = 'iamtestpass_1585255556815' # TODO: Add New User Before Running Test (Add Flow not repeatable)
 TEST_USERPASS = 'Intuit01-'
 TEST_PROFILE_INFO = {
     'fname': 'Vincent',
@@ -35,15 +35,15 @@ TEST_PROFILE_INFO = {
 # ---------- ---------- ---------- ---------- ---------- 
 
 # FIREFOX - geckodriver
-browser = webdriver.Firefox()
-browser_name = 'firefox'
+# browser = webdriver.Firefox()
+# browser_name = 'firefox'
 
 # CHROME chromedriver (v80)
-# options = webdriver.ChromeOptions()
-# options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
-# chrome_driver_binary = "/usr/local/bin/chromedriver"
-# browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
-# browser_name = 'chrome'
+options = webdriver.ChromeOptions()
+options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
+chrome_driver_binary = "/usr/local/bin/chromedriver"
+browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
+browser_name = 'chrome'
 
 # ---------- ---------- ---------- ---------- ----------  
 # UTILITY METHODS
@@ -75,7 +75,7 @@ while True:
         wait_for_elem_select('button[name="SignIn"]').click()
 
         #1.3: Add Current Mobile Number - Skip For Now (new user only)
-        # wait_for_elem_select('button[id="ius-verified-user-update-btn-skip"]').click()
+        wait_for_elem_select('button[id="ius-verified-user-update-btn-skip"]').click()
 
         # 1.3: Confirm IAM Cards Overview Page Loaded
         sleep(8)

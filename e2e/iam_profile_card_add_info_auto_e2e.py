@@ -14,8 +14,8 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 # CONSTANTS
 # ---------- ---------- ---------- ---------- ----------
 WAIT_TIMEOUT = 30 
-IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/'
-TEST_USERNAME = 'iamtestpass_1585255556815' # TODO: Add New User Before Running Test (Add Flow not repeatable)
+IAM_AUTH_URL_E2E = 'https://accounts-e2e.intuit.com/index.html?iux_v3=true'
+TEST_USERNAME = 'iamtestpass_1585761963175' # temp 4/1
 TEST_USERPASS = 'Intuit01-'
 TEST_PROFILE_INFO = {
     'fname': 'Vincent',
@@ -35,15 +35,15 @@ TEST_PROFILE_INFO = {
 # ---------- ---------- ---------- ---------- ---------- 
 
 # FIREFOX - geckodriver
-# browser = webdriver.Firefox()
-# browser_name = 'firefox'
+browser = webdriver.Firefox()
+browser_name = 'firefox'
 
 # CHROME chromedriver (v80)
-options = webdriver.ChromeOptions()
-options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
-chrome_driver_binary = "/usr/local/bin/chromedriver"
-browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
-browser_name = 'chrome'
+# options = webdriver.ChromeOptions()
+# options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" 
+# chrome_driver_binary = "/usr/local/bin/chromedriver"
+# browser = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
+# browser_name = 'chrome'
 
 # ---------- ---------- ---------- ---------- ----------  
 # UTILITY METHODS
@@ -75,7 +75,7 @@ while True:
         wait_for_elem_select('button[name="SignIn"]').click()
 
         #1.3: Add Current Mobile Number - Skip For Now (new user only)
-        wait_for_elem_select('button[id="ius-verified-user-update-btn-skip"]').click()
+        # wait_for_elem_select('button[id="ius-verified-user-update-btn-skip"]').click()
 
         # 1.3: Confirm IAM Cards Overview Page Loaded
         sleep(8)
@@ -83,12 +83,13 @@ while True:
         
         # 2: Profile Card > Name Widget Add Interaction 
         # 2.0: Scroll Down to Profile Card
-        if browser_name == 'firefox':
-            browser.execute_script("window.scrollTo(0, 850);") 
-        elif browser_name == 'chrome':
-            browser.execute_script("window.scrollTo(0, 900);") # account for chrome automated software ribbon
-        else:
-            browser.execute_script("window.scrollTo(0, 850);")
+        # if browser_name == 'firefox':
+        #     browser.execute_script("window.scrollTo(0, 850);") 
+        # elif browser_name == 'chrome':
+        #     browser.execute_script("window.scrollTo(0, 900);") # account for chrome automated software ribbon
+        # else:
+        #     browser.execute_script("window.scrollTo(0, 850);")
+        browser.execute_script("window.scrollTo(0, 850);")
         sleep(3)
 
         # 2.1: Add Flow: Click 'Add Your Name'

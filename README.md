@@ -1,4 +1,4 @@
-# iam-dg-automate-ui
+# iam-py-automate-ui
 
 **Python Selenium scripts that perform browser automation tasks for the DG2 / mydata project.**<br />
 While these scripts are designed to be deployed to AppDyanmics, <br />
